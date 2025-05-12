@@ -1,0 +1,13 @@
+streamlit
+pandas
+numpy
+xgboost
+scikit-learn
+requests
+folium
+streamlit-folium
+geopy
+fpdf
+google-generativeai
+SpeechRecognition
+matplotlib
