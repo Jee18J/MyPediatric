@@ -4452,253 +4452,266 @@ def load_data(file_path):
 SYMPTOM_DEFINITIONS = {
     "FEVER": {
         "follow_up": [
-            {
-                "question": "What is your temperature?",
-                "type": "radio",
-                "options": ["Mild (feels slightly warm to touch)",
-                "Moderate (feels quite warm or sweating)",
-                "Severe (child feels very hot, irritable, or appears unwell)"],
-                "weights": {"Mild (feels slightly warm to touch)": 1,
-                "Moderate (feels quite warm or sweating)": 2,
-                "Severe (child feels very hot, irritable, or appears unwell)": 3}
-            }
+            {"question": "Temperature", "type": "radio",
+             "options": ["Mild (feels slightly warm to touch)",
+                 "Moderate (feels quite warm or sweating)",
+                 "Severe (child feels very hot, irritable, or appears unwell)"],
+             "weights": {"Mild (feels slightly warm to touch)": 1,
+               "Moderate (feels quite warm or sweating)": 2,"Severe (child feels very hot, irritable, or appears unwell)": 3}},
+            {"question": "Duration", "type": "selectbox",
+             "options": ["<24 hours", "1-3 days", "3-7 days", ">7 days"],
+             "weights": {"<24 hours": 1, "1-3 days": 2, "3-7 days": 3, ">7 days": 4}}
         ],
-        "red_flags": ["Fever over 100.4°F in babies under 3 months", "Fever over 104°F"],
+        "red_flags": ["Fever >100.4°F in infants <3 months", "Fever >104°F"],
         "icon": "🌡️"
     },
     "COUGH": {
         "follow_up": [
-            {
-                "question": "What kind of cough do you have?",
-                "type": "selectbox",
-                "options": ["Dry cough", "Wet cough with mucus", "Barking cough", "Whooping cough"],
-                "weights": {"Dry cough": 1, "Wet cough with mucus": 2, "Barking cough": 3, "Whooping cough": 4}
-            }
+            {"question": "Type", "type": "selectbox",
+             "options": ["Dry", "Productive", "Barking", "Whooping"],
+             "weights": {"Dry": 1, "Productive": 2, "Barking": 3, "Whooping": 4}},
+            {"question": "Timing", "type": "radio",
+             "options": ["Daytime", "Nighttime", "With feeding", "After exercise", "All day"],
+             "weights": {"Daytime": 1, "Nighttime": 2, "With feeding": 2, "After exercise": 2, "All day": 3}}
         ],
-        "red_flags": ["Cough with noisy breathing", "Coughing up blood"],
+        "red_flags": ["Whooping sound on inspiration", "Cough causing vomiting"],
         "icon": "🤧"
     },
     "RUNNY_NOSE": {
         "follow_up": [
-            {
-                "question": "How bad is your runny nose?",
-                "type": "radio",
-                "options": ["Mild", "Moderate", "Severe"],
-                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
-            }
+            {"question": "Severity", "type": "radio",
+             "options": ["Mild", "Moderate", "Severe"],
+             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}}
         ],
-        "red_flags": ["Nasal discharge with bad smell"],
+        "red_flags": ["Nasal discharge with foul odor"],
         "icon": "👃"
     },
     "SNEEZING": {
         "follow_up": [
-            {
-                "question": "How often do you sneeze?",
-                "type": "radio",
-                "options": ["Sometimes", "Often", "All the time"],
-                "weights": {"Sometimes": 1, "Often": 2, "All the time": 3}
-            }
+            {"question": "Frequency", "type": "radio",
+             "options": ["Occasional", "Frequent", "Constant"],
+             "weights": {"Occasional": 1, "Frequent": 2, "Constant": 3}}
         ],
         "icon": "🤧"
     },
     "DIARRHEA": {
         "follow_up": [
-            {
-                "question": "How many loose stools do you have per day?",
-                "type": "radio",
-                "options": ["2-4 times", "5-8 times", "More than 8 times", "Watery stool"],
-                "weights": {"2-4 times": 1, "5-8 times": 2, "More than 8 times": 3, "Watery stool": 3}
-            }
+            {"question": "Frequency", "type": "radio",
+             "options": ["2-4 loose stools/day", "5-8 loose stools/day", ">8 loose stools/day", "Watery"],
+             "weights": {"2-4 loose stools/day": 1, "5-8 loose stools/day": 2, ">8 loose stools/day": 3, "Watery": 3}},
+            {"question": "Appearance", "type": "selectbox",
+             "options": ["Loose", "Mucoid", "Bloody", "Rice-water"],
+             "weights": {"Loose": 1, "Mucoid": 2, "Bloody": 3, "Rice-water": 3}}
         ],
         "red_flags": ["Blood in stool", "Signs of dehydration"],
         "icon": "💩"
     },
     "DEHYDRATION": {
         "follow_up": [
-            {
-                "question": "Are you showing signs of dehydration?",
-                "type": "checkbox",
-                "options": ["Dry mouth", "No tears when crying", "Sunken eyes", "Less urination", "Feeling very tired"],
-                "weights": {"Dry mouth": 1, "No tears": 2, "Sunken eyes": 3, "Less urination": 3, "Feeling very tired": 4}
-            }
+            {"question": "Signs", "type": "checkbox",
+             "options": ["Dry mouth", "No tears", "Sunken eyes", "Decreased urine output", "Lethargy"],
+             "weights": {"Dry mouth": 1, "No tears": 2, "Sunken eyes": 3, "Decreased urine output": 3, "Lethargy": 4}}
         ],
         "red_flags": ["Severe dehydration signs"],
         "icon": "💧"
     },
     "ABDOMINAL_PAIN": {
         "follow_up": [
-            {
-                "question": "How bad is your stomach pain?",
-                "type": "radio",
-                "options": ["Mild", "Moderate", "Severe", "Doubled over in pain"],
-                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3, "Doubled over": 4}
-            }
+            {"question": "Severity", "type": "radio",
+             "options": ["Mild", "Moderate", "Severe", "Doubled over"],
+             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3, "Doubled over": 4}},
+            {"question": "Location", "type": "selectbox",
+             "options": ["Generalized", "Upper abdomen", "Lower abdomen", "Right side", "Left side"],
+             "weights": {"Generalized": 1, "Upper abdomen": 2, "Lower abdomen": 2, "Right side": 3, "Left side": 3}}
         ],
-        "red_flags": ["Severe pain that doesn't go away", "Pain for more than 6 hours"],
+        "red_flags": ["Severe localized pain", "Pain lasting >6 hours"],
         "icon": "🤢"
     },
     "RASH": {
         "follow_up": [
-            {
-                "question": "What does your rash look like?",
-                "type": "selectbox",
-                "options": ["Red spots", "Bumps", "Blisters", "Purple spots that don't fade"],
-                "weights": {"Red spots": 1, "Bumps": 2, "Blisters": 3, "Purple spots that don't fade": 4}
-            }
+            {"question": "Appearance", "type": "selectbox",
+             "options": ["Red spots", "Bumps", "Blisters", "Purple spots that don't fade"],
+             "weights": {"Red spots": 1, "Bumps": 2, "Blisters": 3, "Purple spots that don't fade": 4}},
+            {"question": "Distribution", "type": "checkbox",
+             "options": ["Face", "Trunk", "Extremities", "Palms/Soles", "Generalized"],
+             "weights": {"Face": 1, "Trunk": 1, "Extremities": 1, "Palms/Soles": 2, "Generalized": 2}}
         ],
-        "red_flags": ["Rash with fever", "Purple spots that don't fade"],
+        "red_flags": ["Rash with fever", "Non-blanching rash"],
         "icon": "🔴"
     },
     "HEADACHE": {
         "follow_up": [
-            {
-                "question": "How bad is your headache?",
-                "type": "radio",
-                "options": ["Mild", "Moderate", "Severe"],
-                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
-            }
+            {"question": "Severity", "type": "radio",
+             "options": ["Mild", "Moderate", "Severe"],
+             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
+            {"question": "Duration", "type": "selectbox",
+             "options": ["<1 hour", "1-4 hours", "4-24 hours", ">24 hours"],
+             "weights": {"<1 hour": 1, "1-4 hours": 2, "4-24 hours": 3, ">24 hours": 4}}
         ],
         "red_flags": ["Severe headache with fever", "Headache with neck stiffness"],
         "icon": "🤕"
     },
     "CHEST_PAIN": {
         "follow_up": [
-            {
-                "question": "What kind of chest pain?",
-                "type": "selectbox",
-                "options": ["Sharp", "Dull", "Burning", "Pressure"],
-                "weights": {"Sharp": 1, "Dull": 2, "Burning": 2, "Pressure": 3}
-            }
+            {"question": "Type", "type": "selectbox",
+             "options": ["Sharp", "Dull", "Burning", "Pressure"],
+             "weights": {"Sharp": 1, "Dull": 2, "Burning": 2, "Pressure": 3}},
+            {"question": "Associated Symptoms", "type": "checkbox",
+             "options": ["Shortness of breath", "Palpitations", "Cough", "Fever"],
+             "weights": {"Shortness of breath": 2, "Palpitations": 2, "Cough": 1, "Fever": 1}}
         ],
-        "red_flags": ["Chest pain with trouble breathing", "Chest pain with rapid heartbeat"],
+        "red_flags": ["Chest pain with shortness of breath", "Chest pain with palpitations"],
         "icon": "💔"
     },
     "ITCHING": {
         "follow_up": [
-            {
-                "question": "How itchy is it?",
-                "type": "radio",
-                "options": ["Mild", "Moderate", "Severe"],
-                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
-            }
+            {"question": "Severity", "type": "radio",
+             "options": ["Mild", "Moderate", "Severe"],
+             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
+            {"question": "Location", "type": "checkbox",
+             "options": ["Face", "Trunk", "Extremities", "Generalized"],
+             "weights": {"Face": 1, "Trunk": 1, "Extremities": 1, "Generalized": 2}}
         ],
         "icon": "🦠"
     },
     "MUSCLE_ACHES": {
         "follow_up": [
-            {
-                "question": "How bad are your muscle aches?",
-                "type": "radio",
-                "options": ["Mild", "Moderate", "Severe"],
-                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
-            }
+            {"question": "Severity", "type": "radio",
+             "options": ["Mild", "Moderate", "Severe"],
+             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
+            {"question": "Duration", "type": "selectbox",
+             "options": ["<24 hours", "1-3 days", ">3 days"],
+             "weights": {"<24 hours": 1, "1-3 days": 2, ">3 days": 3}}
         ],
         "icon": "💪"
     },
     "NAUSEA": {
         "follow_up": [
-            {
-                "question": "How bad is your nausea?",
-                "type": "radio",
-                "options": ["Mild", "Moderate", "Severe"],
-                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
-            }
+            {"question": "Severity", "type": "radio",
+             "options": ["Mild", "Moderate", "Severe"],
+             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
+            {"question": "Associated Symptoms", "type": "checkbox",
+             "options": ["Vomiting", "Dizziness", "Headache", "Fever"],
+             "weights": {"Vomiting": 2, "Dizziness": 1, "Headache": 1, "Fever": 1}}
         ],
         "icon": "🤢"
     },
     "NECK_STIFFNESS": {
         "follow_up": [
-            {
-                "question": "How stiff is your neck?",
-                "type": "radio",
-                "options": ["Mild", "Moderate", "Severe"],
-                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
-            }
+            {"question": "Severity", "type": "radio",
+             "options": ["Mild", "Moderate", "Severe"],
+             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
+            {"question": "Associated Symptoms", "type": "checkbox",
+             "options": ["Fever", "Headache", "Photophobia"],
+             "weights": {"Fever": 3, "Headache": 2, "Photophobia": 2}}
         ],
         "red_flags": ["Neck stiffness with fever"],
         "icon": "🦴"
     },
     "PHOTOPHOBIA": {
         "follow_up": [
-            {
-                "question": "Does bright light bother your eyes?",
-                "type": "radio",
-                "options": ["Yes", "Sometimes", "No"],
-                "weights": {"Yes": 3, "Sometimes": 2, "No": 1}
-            }
+            {"question": "Severity", "type": "radio",
+             "options": ["Mild", "Moderate", "Severe"],
+             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}}
         ],
         "red_flags": ["Photophobia with headache and fever"],
         "icon": "👁️"
     },
     "POLYDIPSIA": {
         "follow_up": [
-            {
-                "question": "Are you very thirsty?",
-                "type": "radio",
-                "options": ["Yes", "Sometimes", "No"],
-                "weights": {"Yes": 3, "Sometimes": 2, "No": 1}
-            }
+            {"question": "Severity", "type": "radio",
+             "options": ["Mild", "Moderate", "Severe"],
+             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}}
         ],
         "icon": "🚰"
     },
     "POLYURIA": {
         "follow_up": [
-            {
-                "question": "Are you urinating more than usual?",
-                "type": "radio",
-                "options": ["Yes", "Sometimes", "No"],
-                "weights": {"Yes": 3, "Sometimes": 2, "No": 1}
-            }
+            {"question": "Severity", "type": "radio",
+             "options": ["Mild", "Moderate", "Severe"],
+             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}}
         ],
         "icon": "🚽"
     },
     "RESPIRATORY_DISTRESS": {
         "follow_up": [
-            {
-                "question": "How hard is it to breathe?",
-                "type": "radio",
-                "options": ["Mild", "Moderate", "Severe"],
-                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
-            }
+            {"question": "Severity", "type": "radio",
+             "options": ["Mild", "Moderate", "Severe"],
+             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
+            {"question": "Signs", "type": "checkbox",
+             "options": ["Nostrils flare when breathing in",
+    "Chest pulls in or skin sinks in between ribs",
+    "Making grunting sounds when breathing",
+    "Blue lips or face"],
+             "weights": {"Nostrils flare when breathing in": 2,
+    "Chest pulls in or skin sinks in between ribs": 3,
+    "Making grunting sounds when breathing": 3,
+    "Blue lips or face": 4}}
         ],
-        "red_flags": ["Trouble breathing with blue lips or face"],
+        "red_flags": ["Respiratory distress with cyanosis"],
         "icon": "😮‍💨"
     },
     "SORE_THROAT": {
         "follow_up": [
-            {
-                "question": "How sore is your throat?",
-                "type": "radio",
-                "options": ["Mild", "Moderate", "Severe"],
-                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
-            }
+            {"question": "Severity", "type": "radio",
+             "options": ["Mild", "Moderate", "Severe"],
+             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
+            {"question": "Duration", "type": "selectbox",
+             "options": ["<24 hours", "1-3 days", ">3 days"],
+             "weights": {"<24 hours": 1, "1-3 days": 2, ">3 days": 3}}
         ],
         "icon": "👄"
     },
     "STRIDOR": {
         "follow_up": [
-            {
-                "question": "When do you hear stridor?",
-                "type": "radio",
-                "options": ["While breathing in", "While breathing out", "Both"],
-                "weights": {"While breathing in": 2, "While breathing out": 3, "Both": 4}
-            }
+            {"question": "Is there noisy breathing? (making a high-pitched sound)", "type": "radio",
+             "options": ["Noisy when breathing in (inhaling)",
+    "Noisy when breathing out (exhaling)",
+    "Noisy during both inhaling and exhaling"],
+             "weights": {"Noisy when breathing in": 2,
+    "Noisy when breathing out": 3,
+    "Noisy during both": 4}}
         ],
-        "red_flags": ["Stridor when resting"],
-        "icon": "🎶"
+        "red_flags": ["Stridor at rest"],
+        "icon": "🎵"
     },
     "VOMITING": {
         "follow_up": [
-            {
-                "question": "How often do you vomit?",
-                "type": "radio",
-                "options": ["Once or twice", "Several times", "Many times"],
-                "weights": {"Once or twice": 1, "Several times": 2, "Many times": 3}
-            }
+            {"question": "Frequency", "type": "radio",
+             "options": ["1-2 times", "3-5 times", ">5 times"],
+             "weights": {"1-2 times": 1, "3-5 times": 2, ">5 times": 3}},
+            {"question": "Content", "type": "selectbox",
+             "options": ["Food", "Bile", "Blood"],
+             "weights": {"Food": 1, "Bile": 2, "Blood": 3}}
         ],
-        "red_flags": ["Vomiting blood", "Projectile vomiting"],
+        "red_flags": ["Projectile vomiting", "Vomiting blood"],
         "icon": "🤮"
-    }
+    },
+    "WEIGHT_LOSS": {
+        "follow_up": [
+            {"question": "Amount", "type": "radio",
+             "options": ["Less than 5% body weight lost", "5-10% body weight lost", "More than 10% body weight lost"],
+             "weights": {"Less than 5% body weight": 1, "5-10% body weight lost": 2, "More than 10% body weight lost": 3}},
+            {"question": "Duration", "type": "selectbox",
+             "options": ["<1 week", "1-4 weeks", ">4 weeks"],
+             "weights": {"<1 week": 1, "1-4 weeks": 2, ">4 weeks": 3}}
+        ],
+        "red_flags": ["Rapid weight loss"],
+        "icon": "⚖️"
+    },
+    "WHEEZING": {
+        "follow_up": [
+            {"question": "Severity", "type": "radio",
+             "options": ["Mild", "Moderate", "Severe"],
+             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
+            {"question": "Timing", "type": "selectbox",
+             "options": ["Occasional", "With activity", "At rest"],
+             "weights": {"Occasional": 1, "With activity": 2, "At rest": 3}}
+        ],
+        "red_flags": ["Wheezing at rest"],
+        "icon": "🎵"
+    },
+    
 }
 
 # Find nearby doctors using Overpass API
@@ -5026,7 +5039,7 @@ def main():
             )
 
         with tab4:
-            respiratory_symptoms = ["WHEEZING", "STRIDOR", "RESPIRATORY_DISTRESS"]
+            respiratory_symptoms = ["COUGH", "WHEEZING", "STRIDOR", "RESPIRATORY_DISTRESS"]
             selected_respiratory = st.multiselect(
                 "Respiratory symptoms:",
                 options=respiratory_symptoms,
@@ -5064,33 +5077,57 @@ def main():
     if primary_symptoms:
         with st.expander("📝 Step 3: Symptom Details", expanded=False):
             show_step_indicator(3)
-            st.markdown("### Provide details about each symptom")
+            st.markdown("### Provide more details about each symptom")
+            progress_bar = st.progress(0)
             total_symptoms = len(primary_symptoms)
+            
             for i, symptom in enumerate(primary_symptoms):
-                icon = SYMPTOM_DEFINITIONS.get(symptom, {}).get("icon", "ℹ️")
-                st.markdown(f"<div class='symptom-card'><h4>{icon} {symptom.replace('_', ' ').title()}</h4></div>", unsafe_allow_html=True)
-                if symptom in SYMPTOM_DEFINITIONS:
-                    question = SYMPTOM_DEFINITIONS[symptom]["follow_up"][0]
-                    options = question["options"]
-                    response = st.radio(
-                        question["question"],
-                        options=options,
-                        key=f"{symptom}_followup"
-                    )
-                    severity = question["weights"][response]
-                    symptom_details[symptom] = severity
-                else:
-                    severity = st.slider(
-                        f"Severity of {symptom.replace('_', ' ')}",
-                        min_value=0,
-                        max_value=3,
-                        value=0,
-                        step=1,
-                        key=f"{symptom}_severity"
-                    )
-                    symptom_details[symptom] = severity
-                if i < total_symptoms - 1:
-                    st.divider()
+                with st.container():
+                    icon = SYMPTOM_DEFINITIONS.get(symptom, {}).get("icon", "ℹ️")
+                    st.markdown(f"<div class='symptom-card'><h4>{icon} {symptom.replace('_', ' ').title()}</h4></div>", unsafe_allow_html=True)
+                    
+                    if symptom in SYMPTOM_DEFINITIONS:
+                        symptom_score = 0
+                        for question in SYMPTOM_DEFINITIONS[symptom]["follow_up"]:
+                            if question["type"] == "radio":
+                                response = st.radio(
+                                    question["question"],
+                                    options=question["options"],
+                                    key=f"{symptom}_{question['question']}",
+                                    horizontal=True
+                                )
+                                symptom_score += question["weights"][response]
+                            elif question["type"] == "selectbox":
+                                response = st.selectbox(
+                                    question["question"],
+                                    options=question["options"],
+                                    key=f"{symptom}_{question['question']}"
+                                )
+                                symptom_score += question["weights"][response]
+                            elif question["type"] == "checkbox":
+                                response = st.multiselect(
+                                    question["question"],
+                                    options=question["options"],
+                                    key=f"{symptom}_{question['question']}"
+                                )
+                                for item in response:
+                                    symptom_score += question["weights"][item]
+                        symptom_details[symptom] = symptom_score
+                    else:
+                        severity = st.slider(
+                            f"Severity of {symptom.replace('_', ' ')}",
+                            min_value=0.1, 
+                            max_value=3.0, 
+                            value=1.0, 
+                            step=0.1, 
+                            key=symptom,
+                            help="1 = Mild, 3 = Severe"
+                        )
+                        symptom_details[symptom] = severity
+                    
+                    progress_bar.progress((i + 1) / total_symptoms)
+                    if i < total_symptoms - 1:
+                        st.divider()
     
     # Step 4: Analysis
     show_step_indicator(4 if primary_symptoms else 3)
