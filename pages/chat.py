@@ -17,95 +17,145 @@ st.set_page_config(
 def load_css():
     st.markdown("""
     <style>
-        /* Main container styling */
-        .main {
-            background-color: #f9f9f9;
+        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@500&display=swap');
+        html, body, [class*="stApp"] {
+            font-family: 'Lexend', Arial, sans-serif !important;
+            font-weight: 500 !important;
+            font-size: 1.08rem;
+            color: #22304a;
         }
-        
-        /* Header styling */
-        .header {
-            color: #2c3e50;
-            padding: 1rem 0;
+        :root {
+            --primary: #2563eb;
+            --secondary: #38bdf8;
+            --accent: #22c55e;
+            --background: #f4faff;
+            --card: #ffffff;
+            --text: #22304a;
+            --text-light: #4A5568;
+            --warning: #ef4444;
+            --success: #22c55e;
+            --info: #2563eb;
+            --border-radius: 16px;
+            --box-shadow: 0 4px 24px rgba(37, 99, 235, 0.08);
+            --transition: all 0.2s cubic-bezier(.4,0,.2,1);
         }
-        
-        /* Button styling */
+        .stApp {
+            background-color: var(--background) !important;
+        }
+        .main .block-container {
+            background-color: var(--background);
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+        .header-container {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 2.5rem 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--box-shadow);
+            color: #fff;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .header-container h1, .header-container p {
+            color: #fff !important;
+            font-family: 'Lexend', Arial, sans-serif !important;
+            font-weight: 500 !important;
+        }
+        .card, .blog-card {
+            background: var(--card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid #e3eaf3;
+            font-family: 'Lexend', Arial, sans-serif !important;
+            font-weight: 500 !important;
+        }
         .stButton>button {
-            border-radius: 8px;
-            padding: 0.5rem 1rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            background: linear-gradient(90deg, var(--primary) 60%, var(--secondary) 100%);
+            color: #fff !important;
+            font-size: 1.13rem;
+            font-weight: 700;
+            border-radius: var(--border-radius);
+            padding: 0.85rem 2.2rem;
+            border: none;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.10);
+            transition: var(--transition);
+            letter-spacing: 0.01em;
+            outline: none !important;
+            font-family: 'Lexend', Arial, sans-serif !important;
         }
-        
-        .stButton>button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        .stButton>button:hover, .stButton>button:focus {
+            background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
+            color: #fff !important;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.18);
+            transform: translateY(-2px) scale(1.03);
         }
-        
-        /* Blog post cards */
-        .blog-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
+        .stButton>button:active {
+            transform: scale(0.98);
         }
-        
-        .blog-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        .stTextInput input, .stTextArea textarea, .stSelectbox select {
+            border-radius: var(--border-radius) !important;
+            padding: 12px 14px !important;
+            border: 1.5px solid #dbeafe !important;
+            font-size: 1.08rem;
+            color: var(--text);
+            background: #fff;
+            transition: var(--transition);
+            font-family: 'Lexend', Arial, sans-serif !important;
+            font-weight: 500 !important;
         }
-        
+        .stTextInput input:focus, .stTextArea textarea:focus, .stSelectbox select:focus {
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.13) !important;
+        }
+        .notification {
+            background: rgba(37, 99, 235, 0.07);
+            border-left: 5px solid var(--info);
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            color: var(--primary);
+            font-weight: 600;
+            font-family: 'Lexend', Arial, sans-serif !important;
+        }
         .blog-title {
-            color: #2c3e50;
             font-size: 1.2rem;
             font-weight: 600;
+            color: var(--primary);
             margin-bottom: 0.5rem;
+            font-family: 'Lexend', Arial, sans-serif !important;
         }
-        
         .blog-meta {
-            color: #7f8c8d;
+            color: var(--text-light);
             font-size: 0.85rem;
             margin-bottom: 1rem;
+            font-family: 'Lexend', Arial, sans-serif !important;
         }
-        
         .blog-content {
-            color: #34495e;
+            color: var(--text);
             line-height: 1.6;
+            font-family: 'Lexend', Arial, sans-serif !important;
         }
-        
-        /* Notification styling */
-        .notification {
-            background-color: #fff8e1;
-            border-left: 4px solid #ffc107;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-radius: 0 4px 4px 0;
-        }
-        
-        /* Form styling */
-        .stTextInput>div>div>input, .stTextArea>div>div>textarea {
-            border-radius: 8px !important;
-            padding: 10px !important;
-        }
-        
-        /* Condition selector */
-        .stSelectbox>div>div>select {
-            border-radius: 8px !important;
-            padding: 8px !important;
-        }
-        
-        /* Footer styling */
         .footer {
-            color: #7f8c8d;
-            font-size: 0.85rem;
             text-align: center;
-            padding: 1.5rem 0;
+            padding: 1.5rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-family: 'Lexend', Arial, sans-serif !important;
         }
-        
-        /* Responsive adjustments */
         @media (max-width: 768px) {
-            .blog-card {
+            .header-container {
+                padding: 1.5rem 0.5rem;
+            }
+            .card, .blog-card {
                 padding: 1rem;
+            }
+            .stButton>button {
+                padding: 0.7rem 1.2rem;
+                font-size: 1rem;
             }
         }
     </style>
@@ -442,30 +492,42 @@ def show_blog_content():
 if st.session_state.logged_in:
     show_blog_content()
 else:
-    # Splash page for non-logged-in users
+    # Welcome header
+    st.markdown("""
+    <div class="header-container">
+        <h1 style="margin:0;padding:0;">👪 Parent Forum Blog</h1>
+        <p style="margin:0;padding-top:0.5rem;font-size:1.1rem;">A safe space for parents to share experiences and support each other</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Welcome content card
+    st.markdown("""
+    <div class="card">
+        <h2 style="color: var(--primary); margin-bottom: 1rem;">Welcome to Parent Forum</h2>
+        <p style="color: var(--text); font-size: 1.1rem; margin-bottom: 1rem;">
+            A safe space for parents to share experiences, ask questions, 
+            and support each other through childhood health journeys.
+        </p>
+        <p style="color: var(--text); font-size: 1.1rem;">
+            Join our community to connect with other parents facing similar challenges.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Login and Registration in cards
     col1, col2 = st.columns([1, 1])
     
     with col1:
-        st.markdown("""
-        <div style="padding: 2rem;">
-            <h1 style="color: #2c3e50;">👪 Welcome to Parent Forum</h1>
-            <p style="color: #7f8c8d; font-size: 1.1rem;">
-                A safe space for parents to share experiences, ask questions, 
-                and support each other through childhood health journeys.
-            </p>
-            <p style="color: #7f8c8d; font-size: 1.1rem;">
-                Join our community to connect with other parents facing similar challenges.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<div class="card">', unsafe_allow_html=True)
+        login_form()
+        st.markdown('</div>', unsafe_allow_html=True)
     
     with col2:
-        login_form()
-        st.markdown("---")
+        st.markdown('<div class="card">', unsafe_allow_html=True)
         register_form()
+        st.markdown('</div>', unsafe_allow_html=True)
 
 # Footer
-st.markdown("---")
 st.markdown("""
 <div class="footer">
     <p>Parent Forum Blog | A community support platform</p>
