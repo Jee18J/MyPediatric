@@ -253,45 +253,66 @@ def get_username_from_userid(user_id):
 
 # --- Blog Content Display ---
 def display_blog_post(blog, condition_to_display):
-    with st.expander(f"📌 {blog['title']} - Posted on {blog['timestamp']} by {get_username_from_userid(blog['user_id'])}"):
+    with st.expander(f"📌 {blog['title']} - {blog['timestamp']} by {get_username_from_userid(blog['user_id'])}"):
         st.markdown(f'<div class="blog-content">{blog["content"]}</div>', unsafe_allow_html=True)
         
-        # Report button for other users' posts
+        # Check if user is logged in and hasn't reported this post
+        can_report = False
         if st.session_state.logged_in and st.session_state.user_id != blog['user_id']:
-            if st.button("⚠️ Report This Post", key=f"report_post_{blog['id']}"):
-                deleted_post_owner_id = blog['user_id']
-                deleted_post_title = blog['title']
-                deleted_post_id = blog['id']
-                reported_by_username = st.session_state.username
-
-                # Perform deletion
-                blogs_data[condition_to_display] = [p for p in blogs_data[condition_to_display] if p['id'] != deleted_post_id]
-                save_data(blogs_data, BLOGS_FILE)
-
-                # Create notification
-                poster_username = get_username_from_userid(deleted_post_owner_id)
-
-                if poster_username:
-                    notification_message = f"Your post '{deleted_post_title}' was reported and removed by {reported_by_username}."
-                    notification_id = str(uuid.uuid4())
-
-                    if poster_username not in notifications:
-                        notifications[poster_username] = []
-
-                    notifications[poster_username].append({
-                        'id': notification_id,
-                        'message': notification_message,
-                        'read': False,
-                        'user_id': deleted_post_owner_id
-                    })
-                    save_data(notifications, NOTIFICATIONS_FILE)
-
-                    st.success(f"Post reported and removed. The original poster will be notified.")
-                    st.rerun()
+            # Disable report if user already reported
+            already_reported = st.session_state.user_id in blog.get('reporters', [])
+            can_report = not already_reported
+            
+            if st.button("⚠️ Report This Post", key=f"report_post_{blog['id']}", disabled=already_reported):
+                # Report logic
+                user_id = st.session_state.user_id
+                # Initialize reporters list if not present
+                if 'reporters' not in blog:
+                    blog['reporters'] = []
+                if 'report_count' not in blog:
+                    blog['report_count'] = 0
+                
+                if user_id not in blog['reporters']:
+                    # Add user to reporters
+                    blog['reporters'].append(user_id)
+                    blog['report_count'] = len(blog['reporters'])
+                    
+                    # Check if report count >= 5
+                    if blog['report_count'] >= 5:
+                        # Delete post
+                        blogs_list = blogs_data[condition_to_display]
+                        blogs_data[condition_to_display] = [p for p in blogs_list if p['id'] != blog['id']]
+                        save_data(blogs_data, BLOGS_FILE)
+                        
+                        # Notify the author
+                        poster_username = get_username_from_userid(blog['user_id'])
+                        if poster_username:
+                            notification_message = f"Your post '{blog['title']}' was deleted after multiple reports."
+                            notification_id = str(uuid.uuid4())
+                            if poster_username not in notifications:
+                                notifications[poster_username] = []
+                            notifications[poster_username].append({
+                                'id': notification_id,
+                                'message': notification_message,
+                                'read': False,
+                                'user_id': blog['user_id']
+                            })
+                            save_data(notifications, NOTIFICATIONS_FILE)
+                        
+                        st.success("Post has been deleted due to multiple reports. The author has been notified.")
+                        st.rerun()
+                    else:
+                        # Save report info
+                        save_data(blogs_data, BLOGS_FILE)
+                        # Optional: Show feedback
+                        st.success("Post reported. Thank you for helping keep the community safe.")
+                        st.rerun()
                 else:
-                    st.error("Could not find the original poster's username to send a notification.")
-                    st.rerun()
-        
+                    st.info("You have already reported this post.")
+        elif not st.session_state.logged_in or st.session_state.user_id == blog['user_id']:
+            # No report button for author's own posts or if not logged in
+            pass
+
         st.markdown('</div>', unsafe_allow_html=True)
 
 # --- Blog and Notification Logic ---
