@@ -4072,228 +4072,285 @@ import random
 def local_css():
     st.markdown("""
     <style>
-        :root {
-            --primary: #4a6fa5;
-            --secondary: #166088;
-            --accent: #4fc1e9;
-            --background: #f8f9fa;
-            --card: #ffffff;
-            --text: #2c3e50;
-            --warning: #ff6b6b;
-            --success: #48dbb4;
-            --info: #5bc0de;
+         /* Import Lexend Medium font */
+        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@500&display=swap');
+        html, body, [class*="stApp"] {
+            font-family: 'Lexend', Arial, sans-serif !important;
+            font-weight: 500 !important;
+            font-size: 1.08rem;
+            color: #22304a;
         }
-        
-        .main {
-            background-color: var(--background);
+        /* Highlight section headings (expander/step titles/section-title class) */
+        section[data-testid="stExpander"] > div > label,
+        div[role="heading"]:has(> .emoji),
+        .section-title,
+        .stMarkdown h3,
+        .stMarkdown h2 {
+            font-size: 2rem !important;
+            font-weight: 700 !important;
+            color: var(--primary) !important;
+            margin-bottom: 0.5rem !important;
+            letter-spacing: 0.01em;
+            line-height: 1.2;
         }
-        
-        /* Header styling */
-        .header-container {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            color: white;
+        /* General card style for all major sections and expanders */
+        .card, .section-card,
+        section[data-testid="stExpander"],
+        div[data-testid="stExpander"],
+        .st-expander, .streamlit-expander,
+        .stMarkdown > div, .stMarkdown > p {
+            background: #fff !important;
+            border-radius: 18px !important;
+            box-shadow: 0 4px 24px rgba(37, 99, 235, 0.10) !important;
+            padding: 1.5rem 1.5rem 1.2rem 1.5rem !important;
+            margin-bottom: 1.5rem !important;
+            border: 1px solid #e3eaf3 !important;
+        }
+        /* Remove card styling from horizontal rules and their containers */
+        .stMarkdown > hr,
+        .stMarkdown > div:has(> hr),
+        .stMarkdown > p:has(> hr),
+        .stMarkdown > div:empty,
+        .stMarkdown > p:empty {
+            background: none !important;
+            box-shadow: none !important;
+            border: none !important;
+            padding: 0 !important;
+            margin: 0.5rem 0 !important;
+        }
+        /* Style the horizontal rule itself for a clean line */
+        hr, .stMarkdown hr {
+            border: none;
+            border-top: 2px solid #e3eaf3;
+            margin: 1.2rem 0 1.2rem 0;
+            height: 0;
+            background: none;
+        }
+        /* Disclaimer card styling */
+        .disclaimer-card {
+            background-color:#b45309;
+            background: #fff !important;
+            border-radius: 18px !important;
+            box-shadow: 0 4px 24px rgba(37, 99, 235, 0.10) !important;
+            border-left: 6px solid #fbbf24 !important; /* Amber/Yellow */
+            padding: 1.5rem 1.5rem 1.2rem 1.5rem !important;
+            margin-top: 2.5rem !important;
+            margin-bottom: 1.5rem !important;
+            border: 1px solid #e3eaf3 !important;
+        }
+        .disclaimer-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #b45309; /* Dark amber */
+            margin-bottom: 0.7rem;
+            letter-spacing: 0.01em;
             text-align: center;
         }
-        
-        /* Button styling */
-        .stButton>button {
-            background-color: var(--primary);
-            color: white;
-            border-radius: 8px;
-            padding: 0.75rem 1.5rem;
-            font-weight: 600;
-            border: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        /* Root Variables - Medical Theme */
+        :root {
+            --primary: #2563eb;
+            --secondary: #38bdf8;
+            --accent: #22c55e;
+            --background: #f4faff;
+            --card: #ffffff;
+            --text: #22304a;
+            --text-light: #4A5568;
+            --warning: #ef4444;
+            --success: #22c55e;
+            --info: #2563eb;
+            --border-radius: 16px;
+            --box-shadow: 0 4px 24px rgba(37, 99, 235, 0.08);
+            --transition: all 0.2s cubic-bezier(.4,0,.2,1);
         }
-        
-        .stButton>button:hover {
-            background-color: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        .stApp {
+            background-color: var(--background) !important;
         }
-        
-        .stButton>button:active {
-            transform: translateY(0);
+        .main .block-container {
+            background-color: var(--background);
+            padding-top: 2rem;
+            padding-bottom: 2rem;
         }
-        
-        /* Primary button */
-        .primary-button {
-            background-color: var(--primary) !important;
-            color: white !important;
+        .css-1d391kg {
+            background-color: #eaf3fb;
         }
-        
-        /* Secondary button */
-        .secondary-button {
-            background-color: var(--secondary) !important;
-            color: white !important;
+        .header-container {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 2.5rem 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--box-shadow);
+            color: #fff;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        
-        /* Progress bar */
-        .stProgress > div > div > div > div {
-            background-color: var(--accent);
+        .header-container h1, .header-container p {
+            color: #fff !important;
+            font-family: 'Lexend', Arial, sans-serif !important;
+            font-weight: 500 !important;
         }
-        
-        /* Cards */
-        .card {
-            background-color: var(--card);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid rgba(0,0,0,0.05);
+        .card, .streamlit-expanderContent {
+            background: var(--card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid #e3eaf3;
+            font-family: 'Lexend', Arial, sans-serif !important;
+            font-weight: 500 !important;
         }
-        
-        /* Expander styling */
         .streamlit-expanderHeader {
             font-weight: 600;
             color: var(--primary);
+            font-size: 1.15rem;
+            font-family: 'Lexend', Arial, sans-serif !important;
+        }
+        .stButton>button {
+            background: linear-gradient(90deg, var(--primary) 60%, var(--secondary) 100%);
+            color: #fff !important;
+            font-size: 1.13rem;
+            font-weight: 700;
+            border-radius: var(--border-radius);
+            padding: 0.85rem 2.2rem;
+            border: none;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.10);
+            transition: var(--transition);
+            letter-spacing: 0.01em;
+            outline: none !important;
+            font-family: 'Lexend', Arial, sans-serif !important;
+        }
+        .stButton>button:hover, .stButton>button:focus {
+            background: linear-gradient(90deg, var(--secondary) 0%, var(--primary) 100%);
+            color: #fff !important;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.18);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .stButton>button:active {
+            transform: scale(0.98);
+        }
+        .step-indicator {
             font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            font-family: 'Lexend', Arial, sans-serif !important;
         }
-        
-        .streamlit-expanderContent {
-            padding: 1rem 1.5rem;
-        }
-        
-        /* Alert boxes */
-        .stAlert {
-            border-radius: 12px;
-        }
-        
-        /* Custom components */
         .symptom-card {
-            background-color: var(--card);
-            border-radius: 12px;
+            background: var(--card);
+            border-radius: var(--border-radius);
             padding: 1.25rem;
             margin-bottom: 1rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.06);
+            border-left: 5px solid var(--accent);
+            color: var(--text);
+            font-family: 'Lexend', Arial, sans-serif !important;
         }
-        
-        .symptom-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
+        .symptom-card h4 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--primary);
+            font-family: 'Lexend', Arial, sans-serif !important;
         }
-        
         .red-flag {
-            background-color: rgba(255,107,107,0.1);
-            border-left: 4px solid var(--warning);
+            background: rgba(239, 68, 68, 0.08);
+            border-left: 5px solid var(--warning);
             padding: 1rem;
             margin: 0.5rem 0;
-            border-radius: 0 8px 8px 0;
-            animation: pulse 2s infinite;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            color: var(--warning);
+            font-weight: 600;
+            font-family: 'Lexend', Arial, sans-serif !important;
         }
-        
         .recommendation {
-            background-color: rgba(72,219,180,0.1);
-            border-left: 4px solid var(--success);
+            background: rgba(34, 197, 94, 0.08);
+            border-left: 5px solid var(--success);
             padding: 1rem;
             margin: 0.5rem 0;
-            border-radius: 0 8px 8px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            color: var(--success);
+            font-weight: 600;
+            font-family: 'Lexend', Arial, sans-serif !important;
         }
-        
         .info-card {
-            background-color: rgba(91,192,222,0.1);
-            border-left: 4px solid var(--info);
+            background: rgba(37, 99, 235, 0.07);
+            border-left: 5px solid var(--info);
             padding: 1rem;
             margin: 0.5rem 0;
-            border-radius: 0 8px 8px 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            color: var(--primary);
+            font-weight: 600;
+            font-family: 'Lexend', Arial, sans-serif !important;
         }
-        
-        .diagnosis-highlight {
-            background: linear-gradient(135deg, rgba(74,111,165,0.1) 0%, rgba(22,96,136,0.1) 100%);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(74,111,165,0.2);
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255,107,107,0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(255,107,107,0); }
-            100% { box-shadow: 0 0 0 0 rgba(255,107,107,0); }
-        }
-        
-        /* Tabs */
-        .stTabs [data-baseweb="tab-list"] {
-            gap: 10px;
-        }
-        
-        .stTabs [data-baseweb="tab"] {
-            height: 50px;
-            padding: 0 20px;
-            background-color: #f0f4f8;
-            border-radius: 8px 8px 0 0 !important;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-        
-        .stTabs [data-baseweb="tab"]:hover {
-            background-color: #e1e8f0;
-        }
-        
-        .stTabs [aria-selected="true"] {
-            background-color: var(--primary) !important;
-            color: white !important;
-        }
-        
-        /* Input fields */
         .stTextInput input, .stNumberInput input, .stSelectbox select {
-            border-radius: 8px !important;
-            padding: 10px 12px !important;
+            border-radius: var(--border-radius) !important;
+            padding: 12px 14px !important;
+            border: 1.5px solid #dbeafe !important;
+            font-size: 1.08rem;
+            color: var(--text);
+            background: #fff;
+            transition: var(--transition);
+            font-family: 'Lexend', Arial, sans-serif !important;
+            font-weight: 500 !important;
         }
-        
-        /* Radio buttons */
+        .stTextInput input:focus, .stNumberInput input:focus, .stSelectbox select:focus {
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.13) !important;
+        }
         .stRadio [role="radiogroup"] {
             gap: 15px;
         }
-        
         .stRadio [role="radio"] {
             padding: 8px 16px;
-            border-radius: 8px;
-            border: 1px solid #dfe3e8;
+            border-radius: var(--border-radius);
+            border: 1.5px solid #dbeafe;
+            font-size: 1.05rem;
+            color: var(--text);
+            transition: var(--transition);
+            font-family: 'Lexend', Arial, sans-serif !important;
         }
-        
         .stRadio [role="radio"][aria-checked="true"] {
-            background-color: var(--primary);
-            color: white;
+            background: var(--primary);
+            color: #fff;
             border-color: var(--primary);
         }
-        
-        /* Sliders */
-        .stSlider [role="slider"] {
-            background-color: var(--primary) !important;
+        .stProgress > div > div > div > div {
+            background: var(--accent);
+            border-radius: 4px;
         }
-        
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 1.5rem;
-            color: #666;
-            font-size: 0.9em;
-            margin-top: 2rem;
-            border-top: 1px solid #eee;
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
-        
-        /* Tooltips */
-        .stTooltip {
-            border-radius: 8px !important;
-            padding: 8px 12px !important;
+        ::-webkit-scrollbar-track {
+            background: #eaf3fb;
+            border-radius: 4px;
         }
-        
-        /* Responsive adjustments */
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--primary);
+            font-family: 'Lexend', Arial, sans-serif !important;
+            font-weight: 500 !important;
+        }
+        p, li, span, label, div, input, select {
+            color: var(--text);
+            font-family: 'Lexend', Arial, sans-serif !important;
+            font-weight: 500 !important;
+        }
         @media (max-width: 768px) {
             .header-container {
-                padding: 1.5rem 1rem;
+                padding: 1.5rem 0.5rem;
             }
-            
+            .card, .symptom-card, .streamlit-expanderContent {
+                padding: 1rem;
+            }
             .stButton>button {
-                padding: 0.5rem 1rem;
+                padding: 0.7rem 1.2rem;
+                font-size: 1rem;
             }
         }
     </style>
@@ -4395,251 +4452,252 @@ def load_data(file_path):
 SYMPTOM_DEFINITIONS = {
     "FEVER": {
         "follow_up": [
-            {"question": "Temperature", "type": "radio",
-             "options": ["<100.4°F", "100.4-102.2°F", "102.2-104°F", ">104°F"],
-             "weights": {"<100.4°F": 1, "100.4-102.2°F": 2, "102.2-104°F": 3, ">104°F": 4}},
-            {"question": "Duration", "type": "selectbox",
-             "options": ["<24 hours", "1-3 days", "3-7 days", ">7 days"],
-             "weights": {"<24 hours": 1, "1-3 days": 2, "3-7 days": 3, ">7 days": 4}}
+            {
+                "question": "What is your temperature?",
+                "type": "radio",
+                "options": ["Mild (feels slightly warm to touch)",
+                "Moderate (feels quite warm or sweating)",
+                "Severe (child feels very hot, irritable, or appears unwell)"],
+                "weights": {"Mild (feels slightly warm to touch)": 1,
+                "Moderate (feels quite warm or sweating)": 2,
+                "Severe (child feels very hot, irritable, or appears unwell)": 3}
+            }
         ],
-        "red_flags": ["Fever >100.4°F in infants <3 months", "Fever >104°F"],
+        "red_flags": ["Fever over 100.4°F in babies under 3 months", "Fever over 104°F"],
         "icon": "🌡️"
     },
     "COUGH": {
         "follow_up": [
-            {"question": "Type", "type": "selectbox",
-             "options": ["Dry", "Productive", "Barking", "Whooping"],
-             "weights": {"Dry": 1, "Productive": 2, "Barking": 3, "Whooping": 4}},
-            {"question": "Timing", "type": "radio",
-             "options": ["Daytime", "Nighttime", "With feeding", "After exercise", "All day"],
-             "weights": {"Daytime": 1, "Nighttime": 2, "With feeding": 2, "After exercise": 2, "All day": 3}}
+            {
+                "question": "What kind of cough do you have?",
+                "type": "selectbox",
+                "options": ["Dry cough", "Wet cough with mucus", "Barking cough", "Whooping cough"],
+                "weights": {"Dry cough": 1, "Wet cough with mucus": 2, "Barking cough": 3, "Whooping cough": 4}
+            }
         ],
-        "red_flags": ["Whooping sound on inspiration", "Cough causing vomiting"],
+        "red_flags": ["Cough with noisy breathing", "Coughing up blood"],
         "icon": "🤧"
     },
     "RUNNY_NOSE": {
         "follow_up": [
-            {"question": "Severity", "type": "radio",
-             "options": ["Mild", "Moderate", "Severe"],
-             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}}
+            {
+                "question": "How bad is your runny nose?",
+                "type": "radio",
+                "options": ["Mild", "Moderate", "Severe"],
+                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
+            }
         ],
-        "red_flags": ["Nasal discharge with foul odor"],
+        "red_flags": ["Nasal discharge with bad smell"],
         "icon": "👃"
     },
     "SNEEZING": {
         "follow_up": [
-            {"question": "Frequency", "type": "radio",
-             "options": ["Occasional", "Frequent", "Constant"],
-             "weights": {"Occasional": 1, "Frequent": 2, "Constant": 3}}
+            {
+                "question": "How often do you sneeze?",
+                "type": "radio",
+                "options": ["Sometimes", "Often", "All the time"],
+                "weights": {"Sometimes": 1, "Often": 2, "All the time": 3}
+            }
         ],
         "icon": "🤧"
     },
     "DIARRHEA": {
         "follow_up": [
-            {"question": "Frequency", "type": "radio",
-             "options": ["2-4 loose stools/day", "5-8 loose stools/day", ">8 loose stools/day", "Watery"],
-             "weights": {"2-4 loose stools/day": 1, "5-8 loose stools/day": 2, ">8 loose stools/day": 3, "Watery": 3}},
-            {"question": "Appearance", "type": "selectbox",
-             "options": ["Loose", "Mucoid", "Bloody", "Rice-water"],
-             "weights": {"Loose": 1, "Mucoid": 2, "Bloody": 3, "Rice-water": 3}}
+            {
+                "question": "How many loose stools do you have per day?",
+                "type": "radio",
+                "options": ["2-4 times", "5-8 times", "More than 8 times", "Watery stool"],
+                "weights": {"2-4 times": 1, "5-8 times": 2, "More than 8 times": 3, "Watery stool": 3}
+            }
         ],
         "red_flags": ["Blood in stool", "Signs of dehydration"],
         "icon": "💩"
     },
     "DEHYDRATION": {
         "follow_up": [
-            {"question": "Signs", "type": "checkbox",
-             "options": ["Dry mouth", "No tears", "Sunken eyes", "Decreased urine output", "Lethargy"],
-             "weights": {"Dry mouth": 1, "No tears": 2, "Sunken eyes": 3, "Decreased urine output": 3, "Lethargy": 4}}
+            {
+                "question": "Are you showing signs of dehydration?",
+                "type": "checkbox",
+                "options": ["Dry mouth", "No tears when crying", "Sunken eyes", "Less urination", "Feeling very tired"],
+                "weights": {"Dry mouth": 1, "No tears": 2, "Sunken eyes": 3, "Less urination": 3, "Feeling very tired": 4}
+            }
         ],
         "red_flags": ["Severe dehydration signs"],
         "icon": "💧"
     },
     "ABDOMINAL_PAIN": {
         "follow_up": [
-            {"question": "Severity", "type": "radio",
-             "options": ["Mild", "Moderate", "Severe", "Doubled over"],
-             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3, "Doubled over": 4}},
-            {"question": "Location", "type": "selectbox",
-             "options": ["Generalized", "Upper abdomen", "Lower abdomen", "Right side", "Left side"],
-             "weights": {"Generalized": 1, "Upper abdomen": 2, "Lower abdomen": 2, "Right side": 3, "Left side": 3}}
+            {
+                "question": "How bad is your stomach pain?",
+                "type": "radio",
+                "options": ["Mild", "Moderate", "Severe", "Doubled over in pain"],
+                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3, "Doubled over": 4}
+            }
         ],
-        "red_flags": ["Severe localized pain", "Pain lasting >6 hours"],
+        "red_flags": ["Severe pain that doesn't go away", "Pain for more than 6 hours"],
         "icon": "🤢"
     },
     "RASH": {
         "follow_up": [
-            {"question": "Appearance", "type": "selectbox",
-             "options": ["Macular", "Papular", "Vesicular", "Petechial/Purpuric"],
-             "weights": {"Macular": 1, "Papular": 2, "Vesicular": 3, "Petechial/Purpuric": 4}},
-            {"question": "Distribution", "type": "checkbox",
-             "options": ["Face", "Trunk", "Extremities", "Palms/Soles", "Generalized"],
-             "weights": {"Face": 1, "Trunk": 1, "Extremities": 1, "Palms/Soles": 2, "Generalized": 2}}
+            {
+                "question": "What does your rash look like?",
+                "type": "selectbox",
+                "options": ["Red spots", "Bumps", "Blisters", "Purple spots that don't fade"],
+                "weights": {"Red spots": 1, "Bumps": 2, "Blisters": 3, "Purple spots that don't fade": 4}
+            }
         ],
-        "red_flags": ["Rash with fever", "Non-blanching rash"],
+        "red_flags": ["Rash with fever", "Purple spots that don't fade"],
         "icon": "🔴"
     },
     "HEADACHE": {
         "follow_up": [
-            {"question": "Severity", "type": "radio",
-             "options": ["Mild", "Moderate", "Severe"],
-             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
-            {"question": "Duration", "type": "selectbox",
-             "options": ["<1 hour", "1-4 hours", "4-24 hours", ">24 hours"],
-             "weights": {"<1 hour": 1, "1-4 hours": 2, "4-24 hours": 3, ">24 hours": 4}}
+            {
+                "question": "How bad is your headache?",
+                "type": "radio",
+                "options": ["Mild", "Moderate", "Severe"],
+                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
+            }
         ],
         "red_flags": ["Severe headache with fever", "Headache with neck stiffness"],
         "icon": "🤕"
     },
     "CHEST_PAIN": {
         "follow_up": [
-            {"question": "Type", "type": "selectbox",
-             "options": ["Sharp", "Dull", "Burning", "Pressure"],
-             "weights": {"Sharp": 1, "Dull": 2, "Burning": 2, "Pressure": 3}},
-            {"question": "Associated Symptoms", "type": "checkbox",
-             "options": ["Shortness of breath", "Palpitations", "Cough", "Fever"],
-             "weights": {"Shortness of breath": 2, "Palpitations": 2, "Cough": 1, "Fever": 1}}
+            {
+                "question": "What kind of chest pain?",
+                "type": "selectbox",
+                "options": ["Sharp", "Dull", "Burning", "Pressure"],
+                "weights": {"Sharp": 1, "Dull": 2, "Burning": 2, "Pressure": 3}
+            }
         ],
-        "red_flags": ["Chest pain with shortness of breath", "Chest pain with palpitations"],
+        "red_flags": ["Chest pain with trouble breathing", "Chest pain with rapid heartbeat"],
         "icon": "💔"
     },
     "ITCHING": {
         "follow_up": [
-            {"question": "Severity", "type": "radio",
-             "options": ["Mild", "Moderate", "Severe"],
-             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
-            {"question": "Location", "type": "checkbox",
-             "options": ["Face", "Trunk", "Extremities", "Generalized"],
-             "weights": {"Face": 1, "Trunk": 1, "Extremities": 1, "Generalized": 2}}
+            {
+                "question": "How itchy is it?",
+                "type": "radio",
+                "options": ["Mild", "Moderate", "Severe"],
+                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
+            }
         ],
         "icon": "🦠"
     },
     "MUSCLE_ACHES": {
         "follow_up": [
-            {"question": "Severity", "type": "radio",
-             "options": ["Mild", "Moderate", "Severe"],
-             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
-            {"question": "Duration", "type": "selectbox",
-             "options": ["<24 hours", "1-3 days", ">3 days"],
-             "weights": {"<24 hours": 1, "1-3 days": 2, ">3 days": 3}}
+            {
+                "question": "How bad are your muscle aches?",
+                "type": "radio",
+                "options": ["Mild", "Moderate", "Severe"],
+                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
+            }
         ],
         "icon": "💪"
     },
     "NAUSEA": {
         "follow_up": [
-            {"question": "Severity", "type": "radio",
-             "options": ["Mild", "Moderate", "Severe"],
-             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
-            {"question": "Associated Symptoms", "type": "checkbox",
-             "options": ["Vomiting", "Dizziness", "Headache", "Fever"],
-             "weights": {"Vomiting": 2, "Dizziness": 1, "Headache": 1, "Fever": 1}}
+            {
+                "question": "How bad is your nausea?",
+                "type": "radio",
+                "options": ["Mild", "Moderate", "Severe"],
+                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
+            }
         ],
         "icon": "🤢"
     },
     "NECK_STIFFNESS": {
         "follow_up": [
-            {"question": "Severity", "type": "radio",
-             "options": ["Mild", "Moderate", "Severe"],
-             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
-            {"question": "Associated Symptoms", "type": "checkbox",
-             "options": ["Fever", "Headache", "Photophobia"],
-             "weights": {"Fever": 3, "Headache": 2, "Photophobia": 2}}
+            {
+                "question": "How stiff is your neck?",
+                "type": "radio",
+                "options": ["Mild", "Moderate", "Severe"],
+                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
+            }
         ],
         "red_flags": ["Neck stiffness with fever"],
         "icon": "🦴"
     },
     "PHOTOPHOBIA": {
         "follow_up": [
-            {"question": "Severity", "type": "radio",
-             "options": ["Mild", "Moderate", "Severe"],
-             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}}
+            {
+                "question": "Does bright light bother your eyes?",
+                "type": "radio",
+                "options": ["Yes", "Sometimes", "No"],
+                "weights": {"Yes": 3, "Sometimes": 2, "No": 1}
+            }
         ],
         "red_flags": ["Photophobia with headache and fever"],
         "icon": "👁️"
     },
     "POLYDIPSIA": {
         "follow_up": [
-            {"question": "Severity", "type": "radio",
-             "options": ["Mild", "Moderate", "Severe"],
-             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}}
+            {
+                "question": "Are you very thirsty?",
+                "type": "radio",
+                "options": ["Yes", "Sometimes", "No"],
+                "weights": {"Yes": 3, "Sometimes": 2, "No": 1}
+            }
         ],
         "icon": "🚰"
     },
     "POLYURIA": {
         "follow_up": [
-            {"question": "Severity", "type": "radio",
-             "options": ["Mild", "Moderate", "Severe"],
-             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}}
+            {
+                "question": "Are you urinating more than usual?",
+                "type": "radio",
+                "options": ["Yes", "Sometimes", "No"],
+                "weights": {"Yes": 3, "Sometimes": 2, "No": 1}
+            }
         ],
         "icon": "🚽"
     },
     "RESPIRATORY_DISTRESS": {
         "follow_up": [
-            {"question": "Severity", "type": "radio",
-             "options": ["Mild", "Moderate", "Severe"],
-             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
-            {"question": "Signs", "type": "checkbox",
-             "options": ["Nasal flaring", "Retractions", "Grunting", "Cyanosis"],
-             "weights": {"Nasal flaring": 2, "Retractions": 3, "Grunting": 3, "Cyanosis": 4}}
+            {
+                "question": "How hard is it to breathe?",
+                "type": "radio",
+                "options": ["Mild", "Moderate", "Severe"],
+                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
+            }
         ],
-        "red_flags": ["Respiratory distress with cyanosis"],
+        "red_flags": ["Trouble breathing with blue lips or face"],
         "icon": "😮‍💨"
     },
     "SORE_THROAT": {
         "follow_up": [
-            {"question": "Severity", "type": "radio",
-             "options": ["Mild", "Moderate", "Severe"],
-             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
-            {"question": "Duration", "type": "selectbox",
-             "options": ["<24 hours", "1-3 days", ">3 days"],
-             "weights": {"<24 hours": 1, "1-3 days": 2, ">3 days": 3}}
+            {
+                "question": "How sore is your throat?",
+                "type": "radio",
+                "options": ["Mild", "Moderate", "Severe"],
+                "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}
+            }
         ],
         "icon": "👄"
     },
     "STRIDOR": {
         "follow_up": [
-            {"question": "Timing", "type": "radio",
-             "options": ["Inspiratory", "Expiratory", "Both"],
-             "weights": {"Inspiratory": 2, "Expiratory": 3, "Both": 4}}
+            {
+                "question": "When do you hear stridor?",
+                "type": "radio",
+                "options": ["While breathing in", "While breathing out", "Both"],
+                "weights": {"While breathing in": 2, "While breathing out": 3, "Both": 4}
+            }
         ],
-        "red_flags": ["Stridor at rest"],
-        "icon": "🎵"
+        "red_flags": ["Stridor when resting"],
+        "icon": "🎶"
     },
     "VOMITING": {
         "follow_up": [
-            {"question": "Frequency", "type": "radio",
-             "options": ["1-2 times", "3-5 times", ">5 times"],
-             "weights": {"1-2 times": 1, "3-5 times": 2, ">5 times": 3}},
-            {"question": "Content", "type": "selectbox",
-             "options": ["Food", "Bile", "Blood"],
-             "weights": {"Food": 1, "Bile": 2, "Blood": 3}}
+            {
+                "question": "How often do you vomit?",
+                "type": "radio",
+                "options": ["Once or twice", "Several times", "Many times"],
+                "weights": {"Once or twice": 1, "Several times": 2, "Many times": 3}
+            }
         ],
-        "red_flags": ["Projectile vomiting", "Vomiting blood"],
+        "red_flags": ["Vomiting blood", "Projectile vomiting"],
         "icon": "🤮"
-    },
-    "WEIGHT_LOSS": {
-        "follow_up": [
-            {"question": "Amount", "type": "radio",
-             "options": ["<5% body weight", "5-10% body weight", ">10% body weight"],
-             "weights": {"<5% body weight": 1, "5-10% body weight": 2, ">10% body weight": 3}},
-            {"question": "Duration", "type": "selectbox",
-             "options": ["<1 week", "1-4 weeks", ">4 weeks"],
-             "weights": {"<1 week": 1, "1-4 weeks": 2, ">4 weeks": 3}}
-        ],
-        "red_flags": ["Rapid weight loss"],
-        "icon": "⚖️"
-    },
-    "WHEEZING": {
-        "follow_up": [
-            {"question": "Severity", "type": "radio",
-             "options": ["Mild", "Moderate", "Severe"],
-             "weights": {"Mild": 1, "Moderate": 2, "Severe": 3}},
-            {"question": "Timing", "type": "selectbox",
-             "options": ["Occasional", "With activity", "At rest"],
-             "weights": {"Occasional": 1, "With activity": 2, "At rest": 3}}
-        ],
-        "red_flags": ["Wheezing at rest"],
-        "icon": "🎵"
     }
 }
 
@@ -4872,7 +4930,8 @@ def main():
     """, unsafe_allow_html=True)
     
     # Load data and model
-    file_path = "pages/pediatric_dataset_30k.csv"
+    file_path = "pages/new.csv"
+    # file_path = "pediatric_dataset_30k.csv"
     df = load_data(file_path)
     model, label_encoder = train_model(df)
     all_symptoms = [col for col in df.columns if col != "CONDITION"]
@@ -4922,6 +4981,7 @@ def main():
             #     st.warning("⚠️ Children with compromised immune systems may need special medical attention")
     
     # Step 2: Symptom Selection
+    st.markdown("### Please select up to 5 major symptoms that your child is experiencing:")
     with st.expander("🤒 Step 2: Select Symptoms", expanded=False):
         show_step_indicator(2)
         st.markdown("### What symptoms is your child experiencing?")
@@ -5004,57 +5064,33 @@ def main():
     if primary_symptoms:
         with st.expander("📝 Step 3: Symptom Details", expanded=False):
             show_step_indicator(3)
-            st.markdown("### Provide more details about each symptom")
-            progress_bar = st.progress(0)
+            st.markdown("### Provide details about each symptom")
             total_symptoms = len(primary_symptoms)
-            
             for i, symptom in enumerate(primary_symptoms):
-                with st.container():
-                    icon = SYMPTOM_DEFINITIONS.get(symptom, {}).get("icon", "ℹ️")
-                    st.markdown(f"<div class='symptom-card'><h4>{icon} {symptom.replace('_', ' ').title()}</h4></div>", unsafe_allow_html=True)
-                    
-                    if symptom in SYMPTOM_DEFINITIONS:
-                        symptom_score = 0
-                        for question in SYMPTOM_DEFINITIONS[symptom]["follow_up"]:
-                            if question["type"] == "radio":
-                                response = st.radio(
-                                    question["question"],
-                                    options=question["options"],
-                                    key=f"{symptom}_{question['question']}",
-                                    horizontal=True
-                                )
-                                symptom_score += question["weights"][response]
-                            elif question["type"] == "selectbox":
-                                response = st.selectbox(
-                                    question["question"],
-                                    options=question["options"],
-                                    key=f"{symptom}_{question['question']}"
-                                )
-                                symptom_score += question["weights"][response]
-                            elif question["type"] == "checkbox":
-                                response = st.multiselect(
-                                    question["question"],
-                                    options=question["options"],
-                                    key=f"{symptom}_{question['question']}"
-                                )
-                                for item in response:
-                                    symptom_score += question["weights"][item]
-                        symptom_details[symptom] = symptom_score
-                    else:
-                        severity = st.slider(
-                            f"Severity of {symptom.replace('_', ' ')}",
-                            min_value=0.1, 
-                            max_value=3.0, 
-                            value=1.0, 
-                            step=0.1, 
-                            key=symptom,
-                            help="1 = Mild, 3 = Severe"
-                        )
-                        symptom_details[symptom] = severity
-                    
-                    progress_bar.progress((i + 1) / total_symptoms)
-                    if i < total_symptoms - 1:
-                        st.divider()
+                icon = SYMPTOM_DEFINITIONS.get(symptom, {}).get("icon", "ℹ️")
+                st.markdown(f"<div class='symptom-card'><h4>{icon} {symptom.replace('_', ' ').title()}</h4></div>", unsafe_allow_html=True)
+                if symptom in SYMPTOM_DEFINITIONS:
+                    question = SYMPTOM_DEFINITIONS[symptom]["follow_up"][0]
+                    options = question["options"]
+                    response = st.radio(
+                        question["question"],
+                        options=options,
+                        key=f"{symptom}_followup"
+                    )
+                    severity = question["weights"][response]
+                    symptom_details[symptom] = severity
+                else:
+                    severity = st.slider(
+                        f"Severity of {symptom.replace('_', ' ')}",
+                        min_value=0,
+                        max_value=3,
+                        value=0,
+                        step=1,
+                        key=f"{symptom}_severity"
+                    )
+                    symptom_details[symptom] = severity
+                if i < total_symptoms - 1:
+                    st.divider()
     
     # Step 4: Analysis
     show_step_indicator(4 if primary_symptoms else 3)
@@ -5068,6 +5104,10 @@ def main():
         else:
             with st.spinner("Analyzing symptoms..."):
                 time.sleep(1)
+        
+        # with st.spinner("Analyzing symptoms..."):
+        #     # Add a slight delay for better UX
+        #     time.sleep(1)
             
             # Prepare input features
             input_features = {col: 0.0 for col in all_symptoms}
@@ -5135,19 +5175,20 @@ def main():
             
             # Define descriptions for each condition
             condition_descriptions = {
-                "Common Cold": "A viral infection causing runny nose, sneezing, and cough.",
-                "Influenza": "Flu with fever, body aches, cough, and fatigue.",
-                "Bronchiolitis": "Lung infection in infants with breathing difficulty.",
-                "Pneumonia": "Lung infection with cough, fever, and difficulty breathing.",
-                "Meningitis": "Inflammation of membranes around brain/spinal cord, serious.",
-                "Asthma": "Chronic airway inflammation causing wheezing and breathlessness.",
-                "Gastroenteritis": "Stomach infection with diarrhea, vomiting, dehydration.",
-                "Croup": "Viral infection causing barking cough and breathing issues.",
-                "Appendicitis": "Inflammation of appendix, requires urgent care.",
-                "Scarlet Fever": "Bacterial infection with rash and sore throat.",
-                "Eczema": "Skin condition with itchy rashes.",
-                "Type 1 Diabetes": "Autoimmune disease affecting blood sugar regulation."
-                }
+    "Common Cold": "A viral infection causing runny nose, sneezing, and cough.",
+    "Influenza": "Flu with fever, body aches, cough, and fatigue.",
+    "Bronchiolitis": "Lung infection in infants causing breathing difficulty and wheezing.",
+    "Pneumonia": "Lung infection with cough, fever, and trouble breathing.",
+    "Meningitis": "Inflammation of the membranes around the brain and spinal cord, which can be serious.",
+    "Asthma": "Chronic condition where airways become inflamed, leading to wheezing and breathlessness.",
+    "Gastroenteritis": "Stomach infection causing diarrhea, vomiting, and dehydration.",
+    "Croup": "Viral illness in young children causing a barking cough and breathing problems.",
+    "Appendicitis": "Inflammation of the appendix, requiring prompt medical treatment.",
+    "Scarlet Fever": "Bacterial infection with a rash, sore throat, and fever.",
+    "Eczema": "Skin condition marked by itchy, inflamed rashes.",
+    "Type 1 Diabetes": "Autoimmune disorder where the body cannot produce insulin, affecting blood sugar levels.",
+    "Chickenpox": "Highly contagious viral infection causing an itchy rash with blisters and mild fever, mostly affecting children."
+}
             def create_condition_html(condition_name):
                 description = condition_descriptions.get(condition_name, "No description available.")
                 return f"""
@@ -5287,7 +5328,7 @@ def main():
 
     st.markdown("---")
     st.markdown("### Growth Chart")
-    st.markdown("Uderstand the growth of your child")
+    st.markdown("Understand the growth of your child")
     if st.button("Open Growth Chart", type="secondary", use_container_width=True):
         st.switch_page("pages/growth.py") # This is the key line to switch pages
     
