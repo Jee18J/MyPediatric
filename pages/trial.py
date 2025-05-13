@@ -997,6 +997,13 @@ def main():
 
         if primary_symptoms:
             st.markdown(f"<div class='info-card'>Selected symptoms: {', '.join([s.replace('_', ' ').title() for s in primary_symptoms])}</div>", unsafe_allow_html=True)
+
+        # Check total number of symptoms
+        total_symptoms = len(primary_symptoms)
+        can_proceed = True
+        if total_symptoms > 5:
+            st.warning("Please select no more than 5 symptoms.")
+            can_proceed = False
     
     # Step 3: Symptom Details
     symptom_details = {}
@@ -1061,10 +1068,12 @@ def main():
         if not primary_symptoms:
             st.warning("Please select at least one symptom")
             st.stop()
-        
-        with st.spinner("Analyzing symptoms..."):
-            # Add a slight delay for better UX
-            time.sleep(1)
+        elif not can_proceed:
+            st.error("Too many symptoms selected. Please reduce to 5 or fewer.")
+            st.stop()
+        else:
+            with st.spinner("Analyzing symptoms..."):
+                time.sleep(1)
             
             # Prepare input features
             input_features = {col: 0.0 for col in all_symptoms}
@@ -1124,28 +1133,39 @@ def main():
             </div>
             """, unsafe_allow_html=True)
             
-            # Condition probabilities
-            st.markdown("### Condition Probabilities")
-            prob_df = pd.DataFrame({
-                "Condition": label_encoder.classes_,
-                "Probability": probabilities
-}).sort_values("Probability", ascending=False).head(3)
-            
-            st.dataframe(
-                prob_df.style.format({"Probability": "{:.2%}"}),
-                column_config={
-                    "Condition": "Possible Condition",
-                    "Probability": st.column_config.ProgressColumn(
-                        "Probability",
-                        help="How likely this condition is",
-                        format="%.2f%%",
-                        min_value=0,
-                        max_value=1,
-                    )
-                },
-                hide_index=True,
-                use_container_width=True
-            )
+            # Define descriptions for each condition
+            condition_descriptions = {
+                "Common Cold": "A viral infection causing runny nose, sneezing, and cough.",
+                "Influenza": "Flu with fever, body aches, cough, and fatigue.",
+                "Bronchiolitis": "Lung infection in infants with breathing difficulty.",
+                "Pneumonia": "Lung infection with cough, fever, and difficulty breathing.",
+                "Meningitis": "Inflammation of membranes around brain/spinal cord, serious.",
+                "Asthma": "Chronic airway inflammation causing wheezing and breathlessness.",
+                "Gastroenteritis": "Stomach infection with diarrhea, vomiting, dehydration.",
+                "Croup": "Viral infection causing barking cough and breathing issues.",
+                "Appendicitis": "Inflammation of appendix, requires urgent care.",
+                "Scarlet Fever": "Bacterial infection with rash and sore throat.",
+                "Eczema": "Skin condition with itchy rashes.",
+                "Type 1 Diabetes": "Autoimmune disease affecting blood sugar regulation."
+                }
+            def create_condition_html(condition_name):
+                description = condition_descriptions.get(condition_name, "No description available.")
+                return f"""
+                <span style='margin-left:8px; font-size:1.2em; cursor:pointer;' title="{description}">ℹ️</span>
+                """
+            # Select top 3 conditions
+            top_conditions = prob_df['Condition'].head(3).tolist()
+            top_probs = prob_df['Probability'].head(3).tolist()
+            # Add a heading for clarity
+            st.markdown("### Top Possible Conditions:")
+            cols = st.columns(3)
+            for i, col in enumerate(cols):
+                cond = top_conditions[i]
+                prob = top_probs[i]
+                icon_html = create_condition_html(cond)
+                col.markdown(f"**{cond}** {icon_html}", unsafe_allow_html=True)
+                col.progress(int(prob * 100))
+                col.write(f"{prob:.2%}")
             
             # Red flags
             if red_flags:
