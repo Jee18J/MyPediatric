@@ -5117,6 +5117,12 @@ def main():
                 recommendations.append("Stridor may indicate airway obstruction - seek medical attention.")
             if "NECK_STIFFNESS" in primary_symptoms:
                 recommendations.append("Neck stiffness with fever requires urgent medical evaluation.")
+
+            # Create the DataFrame for top probabilities
+            prob_df = pd.DataFrame({
+                "Condition": label_encoder.classes_,
+                "Probability": probabilities
+                }).sort_values("Probability", ascending=False).head(3)
             
             # Display results
             st.markdown("---")
