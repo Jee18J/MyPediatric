@@ -1175,7 +1175,7 @@ def main():
             
             # Red flags
             if red_flags:
-                st.markdown("### ⚠️ Red Flags")
+                st.markdown("### ⚠️ Red Flags (to be visited doctor when encountered)")
                 for flag in red_flags:
                     st.markdown(f"""
                     <div class='red-flag'>
