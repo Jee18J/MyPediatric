@@ -4991,6 +4991,13 @@ def main():
 
         if primary_symptoms:
             st.markdown(f"<div class='info-card'>Selected symptoms: {', '.join([s.replace('_', ' ').title() for s in primary_symptoms])}</div>", unsafe_allow_html=True)
+
+        # Check total number of symptoms
+        total_symptoms = len(primary_symptoms)
+        can_proceed = True
+        if total_symptoms > 5:
+            st.warning("Please select no more than 5 symptoms.")
+            can_proceed = False
     
     # Step 3: Symptom Details
     symptom_details = {}
@@ -5055,10 +5062,12 @@ def main():
         if not primary_symptoms:
             st.warning("Please select at least one symptom")
             st.stop()
-        
-        with st.spinner("Analyzing symptoms..."):
-            # Add a slight delay for better UX
-            time.sleep(1)
+        elif not can_proceed:
+            st.error("Too many symptoms selected. Please reduce to 5 or fewer.")
+            st.stop()
+        else:
+            with st.spinner("Analyzing symptoms..."):
+                time.sleep(1)
             
             # Prepare input features
             input_features = {col: 0.0 for col in all_symptoms}
