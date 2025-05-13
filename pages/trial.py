@@ -5026,7 +5026,7 @@ def main():
             )
 
         with tab4:
-            respiratory_symptoms = ["COUGH", "WHEEZING", "STRIDOR", "RESPIRATORY_DISTRESS"]
+            respiratory_symptoms = ["WHEEZING", "STRIDOR", "RESPIRATORY_DISTRESS"]
             selected_respiratory = st.multiselect(
                 "Respiratory symptoms:",
                 options=respiratory_symptoms,
