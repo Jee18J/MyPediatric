@@ -139,39 +139,41 @@ def local_css():
 
 # Dummy percentile curves (simplified WHO-like format)
 def get_weight_for_age_curves(gender):
-    months = np.arange(0, 25)  # 0 to 24 months
+    months = np.arange(0, 61)  # 0 to 60 months
     base = 3.2 if gender == "Male" else 3.0
+    # Using a more realistic growth curve that slows down over time
     return {
         "months": months,
-        "3rd": base + 0.3 * months,
-        "15th": base + 0.35 * months,
-        "50th": base + 0.42 * months,
-        "85th": base + 0.49 * months,
-        "97th": base + 0.55 * months,
+        "3rd": base + 0.3 * months + 0.001 * months**2,
+        "15th": base + 0.35 * months + 0.0015 * months**2,
+        "50th": base + 0.42 * months + 0.002 * months**2,
+        "85th": base + 0.49 * months + 0.0025 * months**2,
+        "97th": base + 0.55 * months + 0.003 * months**2,
     }
 
 def get_height_for_age_curves(gender):
-    months = np.arange(0, 25)
+    months = np.arange(0, 61)  # 0 to 60 months
     base = 49.9 if gender == "Male" else 49.1
+    # Using a more realistic growth curve that slows down over time
     return {
         "months": months,
-        "3rd": base + 0.7 * months,
-        "15th": base + 0.75 * months,
-        "50th": base + 0.8 * months,
-        "85th": base + 0.85 * months,
-        "97th": base + 0.9 * months,
+        "3rd": base + 0.7 * months + 0.01 * months**2,
+        "15th": base + 0.75 * months + 0.015 * months**2,
+        "50th": base + 0.8 * months + 0.02 * months**2,
+        "85th": base + 0.85 * months + 0.025 * months**2,
+        "97th": base + 0.9 * months + 0.03 * months**2,
     }
 
 def get_weight_for_height_curves(gender):
-    heights = np.arange(45, 100)
+    heights = np.arange(45, 120)  # Extended height range
     base = 2.5 if gender == "Male" else 2.3
     return {
         "heights": heights,
-        "3rd": base + 0.1 * (heights - 45),
-        "15th": base + 0.13 * (heights - 45),
-        "50th": base + 0.15 * (heights - 45),
-        "85th": base + 0.18 * (heights - 45),
-        "97th": base + 0.20 * (heights - 45),
+        "3rd": base + 0.1 * (heights - 45) + 0.001 * (heights - 45)**2,
+        "15th": base + 0.13 * (heights - 45) + 0.0015 * (heights - 45)**2,
+        "50th": base + 0.15 * (heights - 45) + 0.002 * (heights - 45)**2,
+        "85th": base + 0.18 * (heights - 45) + 0.0025 * (heights - 45)**2,
+        "97th": base + 0.20 * (heights - 45) + 0.003 * (heights - 45)**2,
     }
 
 # Apply custom CSS
@@ -192,10 +194,10 @@ st.markdown('<h2 style="color: var(--primary); margin-bottom: 1.5rem;">Enter Chi
 col1, col2 = st.columns(2)
 with col1:
     gender = st.radio("Gender", ["Male", "Female"])
-    age = st.number_input("Age (months)", min_value=0, max_value=24, step=1)
+    age = st.number_input("Age (months)", min_value=0, max_value=60, step=1)
 with col2:
-    weight = st.number_input("Weight (kg)", min_value=2.0, max_value=20.0, step=0.1)
-    height = st.number_input("Height (cm)", min_value=45.0, max_value=100.0, step=0.1)
+    weight = st.number_input("Weight (kg)", min_value=2.0, max_value=30.0, step=0.1)
+    height = st.number_input("Height (cm)", min_value=45.0, max_value=120.0, step=0.1)
 
 show = st.button("Plot Growth Charts", use_container_width=True)
 st.markdown('</div>', unsafe_allow_html=True)

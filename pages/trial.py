@@ -4943,7 +4943,7 @@ def main():
     """, unsafe_allow_html=True)
     
     # Load data and model
-    file_path = "pages/new.csv"
+    file_path = "new.csv"
     # file_path = "pediatric_dataset_30k.csv"
     df = load_data(file_path)
     model, label_encoder = train_model(df)
